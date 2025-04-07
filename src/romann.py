@@ -33,6 +33,8 @@ class RomanConverter:
         'dezain': 'design',
         'shisutemu': 'system',
         'puroguramu': 'program',
+        'dotto': 'dotted',
+        'panku': 'punk',
     }
     def __init__(self):
         self.converter = kakasi()
@@ -57,12 +59,15 @@ class RomanConverter:
         """
         if not text:
             return ""
-
+        
         # romanize by kakasi
         result = self.converter.convert(text)
 
         # collect hepburn
-        result = [item['hepburn'] for item in result]
+        result = [item['hepburn'].split("・") for item in result]
+
+        # flatten list
+        result = [word for sublist in result for word in sublist]
         
         # Convert katakana English to proper English
         result = [self.convert_katakana_english(word) for word in result]
@@ -72,8 +77,5 @@ class RomanConverter:
         
         # Handle consecutive spaces
         result = re.sub(r'\s+', ' ', result)
-
-        # " ・ " -> "・"
-        result = re.sub(r'\s*・\s*', '・', result)
 
         return result.strip()

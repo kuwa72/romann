@@ -25,7 +25,7 @@ def test_natural_japanese_titles():
     converter = RomanConverter()
     assert converter.to_roman("薔薇の花") == "Bara No Hana"
     assert converter.to_roman("追憶のマーメイド") == "Tsuioku No Mermaid"
-    assert converter.to_roman("A・RA・SHI") == "A.Ra.Shi"
+    assert converter.to_roman("A・RA・SHI") == "A Ra Shi"
     assert converter.to_roman("さよならCOLOR") == "Sayonara Color"
 
 def test_katakana_english():
@@ -42,5 +42,5 @@ def test_particle_no():
 
 def test_separator_conversion():
     converter = RomanConverter()
-    assert converter.to_roman("A・B・C") == "A・B・C"
-    assert converter.to_roman("ドット・パンク") == "Dotto・Panku"
+    assert converter.to_roman("A・B・C") == "A B C"
+    assert converter.to_roman("ドット・パンク") == "Dotted Punk"
