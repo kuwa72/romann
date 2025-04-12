@@ -1,9 +1,13 @@
-colorama==0.4.6
-iniconfig==2.1.0
-kanjiconv==0.1.2
-packaging==24.2
-pluggy==1.5.0
-pytest==8.3.5
+# Main libraries
+pykakasi==2.3.0
+SudachiPy==0.6.10
 SudachiDict-core==20250129
 SudachiDict-full==20250129
-SudachiPy==0.6.10
+jaconv==0.4.0
+
+# Test libraries
+pytest==8.3.5
+iniconfig==2.1.0
+pluggy==1.5.0
+packaging==24.2
+colorama==0.4.6

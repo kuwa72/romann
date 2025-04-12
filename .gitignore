@@ -64,6 +64,3 @@ target/
 # poetry
 poetry.lock
 poetry.toml
-
-# windsurf
-.windsurfrules
