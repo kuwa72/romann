@@ -1,29 +1,74 @@
 # romann
 
-日本語テキストを自然なローマ字表記に変換するライブラリです。
-視認性の悪い液晶ディスプレイで曲のタイトルなどを確認する用途に最適化されており、以下のような変換を行います。
+日本語テキストを自然なローマ字や英語表記に変換するPythonライブラリです。
+曲名・人名・外来語などを、視認性の高いローマ字や本来のスペルで出力します。
+液晶ディスプレイや海外向け表示などにご活用いただけます。
 
-* 薔薇の花 -> Bara No Hana
-* 追憶のマーメイド -> Tsuioku No Mermaid
-* A・RA・SHI -> A Ra Shi
-* さよならCOLOR -> Sayonara Color
-* SAKURAドロップス -> Sakura Drops
-* さようなら、また明日 -> Sayonara, Mata Ashita
-
-## 特徴
+## 主な特徴
 
 - SudachiPyによる高精度な形態素解析
-- 外来語を自然な英語表記に変換
-- 4x8ドット文字でも視認性の高いローマ字表記
+- 外来語は辞書に基づき英語表記に自動変換（カスタマイズ可）
+- 4x8ドット液晶でも読みやすいローマ字表記
+- Python 3.12対応・TDDによる品質管理
+
+## 変換例
+
+| 日本語 | ローマ字 | 英語表記 |
+|:--|:--|:--|
+| アース・ウィンド＆ファイアー | Aasu Wind & Faiaa | Earth Wind And Fire |
+| いけないボーダーライン | Ikenai Boodaa Rain | Ikenai Border Line |
+| さよならCOLOR | Sayonara Color | Sayonara Color |
+| 釈迦・イン・ザ・ハウス | Shaka In Za Hausu | Shaka In The House |
+
+## 動作環境
+
+- Python 3.12
+- 主要依存: SudachiPy, pykakasi, jaconv
+
+## インストール
+
+```bash
+pip install romann
+```
+
+## 使い方
+
+```python
+from romann import RomanConverter
+converter = RomanConverter()
+print(converter.to_roman("薔薇の花"))  # Bara No Hana
+print(converter.to_roman("アース・ウィンド＆ファイアー"))  # Earth Wind & Fire
+```
 
 ## 変換ルール
 
-- 単語の先頭は大文字
-- 単語はスペース区切り
-- 外来語は可能な限り英単語に変換
-  - 例: アース -> Earth, ドア -> Door
+- 単語の先頭は大文字、スペース区切り
+- 外来語は辞書にあれば英語表記、なければローマ字
 - 記号類はそのまま（「、」「。」は「,」「.」に変換）
-- 前後の空白は削除
+- 前後・連続する空白は整理
+
+## 外来語辞書のカスタマイズ
+
+外来語の変換は `hiragana_english.json` および `katakana_english.json` に基づきます。
+これらを編集することで、特定単語の変換方法を調整できます。
+
+例（hiragana_english.json）:
+```json
+{
+  "あーす": "earth",
+  "どあ": "door"
+}
+```
+- hiragana_english.json: ひらがな→英語表記
+- katakana_english.json: カタカナ→英語表記
+
+## 関連
+
+- [Kanjiconv](https://zenn.dev/sea_turt1e/articles/e7dc022231a86c)
+
+---
+
+ご利用・フィードバック・Issue歓迎します。
 - 連続する空白は1つの空白に変換
 
 ## インストール
