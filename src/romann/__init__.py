@@ -1,2 +1,4 @@
-# romannパッケージの初期化ファイル
+"""
+romann パッケージの初期化モジュール
+"""
 from .romann import *
