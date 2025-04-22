@@ -1,28 +1,45 @@
 # -*- coding: utf-8 -*-
-import pytest
-from src.romann import RomanConverter
+"""
+test_romann.py - Tests for romann library
+"""
+from romann import RomanConverter
 
 def test_convert_kanji_to_roman():
+    """
+    Test conversion of kanji to roman.
+    """
     converter = RomanConverter()
     assert converter.to_roman("漢字") == "Kanji"
     assert converter.to_roman("日本語") == "Nihongo"
     assert converter.to_roman("こんにちは") == "Konnichiha"
 
 def test_convert_mixed_text():
+    """
+    Test conversion of mixed Japanese text.
+    """
     converter = RomanConverter()
     assert converter.to_roman("Hello漢字World") == "Hello Kanji World"
     assert converter.to_roman("テスト123") == "Test 123"
 
 def test_empty_string():
+    """
+    Test conversion of empty string.
+    """
     converter = RomanConverter()
     assert converter.to_roman("") == ""
 
 def test_whitespace_handling():
+    """
+    Test handling of spaces in text.
+    """
     converter = RomanConverter()
     assert converter.to_roman("こんにちは 世界") == "Konnichiha Sekai"
     assert converter.to_roman("  スペース  ") == "Space"
 
 def test_natural_japanese_titles():
+    """
+    Test conversion of natural Japanese titles.
+    """
     converter = RomanConverter()
     assert converter.to_roman("薔薇の花") == "Bara No Hana"
     assert converter.to_roman("追憶のマーメイド") == "Tsuioku No Mermaid"
@@ -30,6 +47,9 @@ def test_natural_japanese_titles():
     assert converter.to_roman("さよならCOLOR") == "Sayonara Color"
 
 def test_hiragana_english():
+    """
+    Test conversion of hiragana to roman.
+    """
     converter = RomanConverter()
     assert converter.to_roman("めーる") == "Mail"
     # SudachiPyの分割特性に合わせてテストケースを調整
@@ -39,17 +59,26 @@ def test_hiragana_english():
     assert converter.to_roman("どり") == "Dori"
 
 def test_particle_no():
+    """
+    Test special handling for particle 'の'.
+    """
     converter = RomanConverter()
     assert converter.to_roman("春の海") == "Haru No Umi"
     assert converter.to_roman("僕の名前") == "Boku No Namae"
 
 def test_separator_conversion():
+    """
+    Test conversion of separators.
+    """
     converter = RomanConverter()
     assert converter.to_roman("A・B・C") == "A B C"
     # ドット・パンクのSudachiPyによる分割結果に合わせる
     assert converter.to_roman("ドット・パンク") == "Dotto Panku"
 
 def test_morphological_analysis():
+    """
+    Test morphological analysis.
+    """
     converter = RomanConverter()
     # SudachiPyの分割結果に合わせてテストケースを調整
     assert converter.to_roman("アース") == "Earth"

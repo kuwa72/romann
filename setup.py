@@ -22,6 +22,8 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
 )
+
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
