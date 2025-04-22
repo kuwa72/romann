@@ -28,7 +28,7 @@ requests==2.32.3
 requests-toolbelt==1.0.0
 rfc3986==2.0.0
 rich==14.0.0
-romann @ file:///C:/Users/ykuwa/ghq/github.com/kuwa72/romann/dist/romann-0.1.0-py3-none-any.whl#sha256=09355ab637cc8f4e8e2826fdb30ebfbec2e4fce62a1d9d7d2399a9a124ca01a9
+romann @ file:///C:/Users/ykuwa/ghq/github.com/kuwa72/romann/#sha256=09355ab637cc8f4e8e2826fdb30ebfbec2e4fce62a1d9d7d2399a9a124ca01a9
 setuptools==79.0.0
 SudachiDict-core==20250129
 SudachiPy==0.6.10
