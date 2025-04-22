@@ -89,14 +89,19 @@ def test_morphological_analysis():
     assert converter.to_roman("ボーダーライン") == "Border Line"
 
 def test_compound_words():
+    """
+    Test conversion of compound words and loanwords.
+    """
     converter = RomanConverter()
     # SudachiPyの分割結果に合わせてテストケースを調整
     assert converter.to_roman("釈迦") == "Shaka"
     assert converter.to_roman("インザハウス") == "Inzahausu"
     assert converter.to_roman("オープン") == "Open"
     assert converter.to_roman("ドア") == "Door"
-    
 def test_mixed_japanese_english():
+    """
+    Test conversion of mixed Japanese and English words.
+    """
     converter = RomanConverter()
     # SudachiPyの分割結果に合わせてテストケースを調整
     assert converter.to_roman("ハロー") == "Hello"
@@ -106,6 +111,9 @@ def test_mixed_japanese_english():
     assert converter.to_roman("ユー") == "You"
 
 def test_readme_examples():
+    """
+    Test README conversion examples.
+    """
     converter = RomanConverter()
     # READMEの変換例をそのまま検証
     assert converter.to_roman("アース・ウィンド＆ファイアー") == "Earth Wind And Fire"
