@@ -1,3 +1,6 @@
+"""
+setup.py - Packaging and distribution configuration for the romann library.
+"""
 from setuptools import setup, find_packages
 
 setup(
