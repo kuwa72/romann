@@ -82,4 +82,4 @@ def test_readme_examples():
     assert converter.to_roman("アース・ウィンド＆ファイアー") == "Earth Wind And Fire"
     assert converter.to_roman("いけないボーダーライン") == "Ike Nai Border Line"
     assert converter.to_roman("さよならCOLOR") == "Sayonara Color"
-    assert converter.to_roman("釈迦・イン・ザ・ハウス") == "Shaka In The Hausu"
+    assert converter.to_roman("釈迦・イン・ザ・ハウス") == "Shaka In The House"
