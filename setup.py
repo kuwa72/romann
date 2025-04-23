@@ -18,6 +18,7 @@ setup(
         "pykakasi",
         "jaconv",
         "sudachipy",
+        "SudachiDict-core",
     ],
     python_requires=">=3.12",
     classifiers=[
