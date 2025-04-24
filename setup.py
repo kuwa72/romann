@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="romann",
-    version="0.1.0",
+    version="0.1.1",
     description="日本語→自然なローマ字・英語変換ライブラリ（kakasi/SudachiPyベース＋外来語辞書対応）",
     author="ykuwa",
     author_email="",
