@@ -34,7 +34,7 @@ class RomanConverter:
         """
         return self.HIRAGANA_ENGLISH.get(word.lower(), word).capitalize()
 
-    def to_roman(self, text: str) -> str:
+    def to_roman(self, text: str, remove_spaces: bool = True) -> str:
         """
         Convert Japanese text (kanji, hiragana, katakana) to romaji.
         Preserves non-Japanese characters as they are.
@@ -42,6 +42,7 @@ class RomanConverter:
 
         Args:
             text (str): Input text containing Japanese characters
+            remove_spaces (bool, optional): Whether to remove spaces from the output. Defaults to True.
 
         Returns:
             str: Romanized text with natural capitalization and formatting
@@ -100,6 +101,10 @@ class RomanConverter:
 
         # 連続する空白を削除
         result_text = re.sub(r'\s+', ' ', result_text)
+        
+        # スペースを削除するオプションが有効な場合
+        if remove_spaces:
+            result_text = result_text.replace(' ', '')
 
         return result_text.strip()
 

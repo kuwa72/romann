@@ -36,13 +36,18 @@ pip install romann
 ```python
 from romann import RomanConverter
 converter = RomanConverter()
-print(converter.to_roman("薔薇の花"))  # Bara No Hana
-print(converter.to_roman("アース・ウィンド＆ファイアー"))  # Earth Wind & Fire
+print(converter.to_roman("薔薇の花"))  # BaraNoHana
+print(converter.to_roman("アース・ウィンド＆ファイアー"))  # EarthWindAndFire
+
+# スペースありの変換
+print(converter.to_roman("薔薇の花", remove_spaces=False))  # Bara No Hana
+print(converter.to_roman("アース・ウィンド＆ファイアー", remove_spaces=False))  # Earth Wind & Fire
 ```
 
 ## 変換ルール
 
-- 単語の先頭は大文字、スペース区切り
+- 単語の先頭は大文字
+- デフォルトではスペースなしで出力（オプションでスペース区切りに変更可能）
 - 外来語は辞書にあれば英語表記、なければローマ字
 - 記号類はそのまま（「、」「。」は「,」「.」に変換）
 - 前後・連続する空白は整理
@@ -119,8 +124,18 @@ print(romaji)  # 出力: "Earth Wind"
 from romann import RomanConverter
 
 converter = RomanConverter()
+
+# 通常の変換（スペースなし）
 result = converter.to_roman("こんにちは")
 print(result)  # 出力: Konnichiha
+
+# 複数単語の変換（デフォルトでスペースなし）
+result = converter.to_roman("こんにちは 世界")
+print(result)  # 出力: KonnichihaSekai
+
+# スペースありの変換
+result = converter.to_roman("こんにちは 世界", remove_spaces=False)
+print(result)  # 出力: Konnichiha Sekai
 ```
 
 ## 関連
