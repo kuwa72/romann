@@ -34,7 +34,6 @@ requests==2.32.3
 requests-toolbelt==1.0.0
 rfc3986==2.0.0
 rich==14.0.0
--e git+https://github.com/kuwa72/romann.git@c0f8dfa913f16adba919aff8dd7b311f334a8ba1#egg=romann
 setuptools==79.0.0
 SudachiDict-core==20250129
 SudachiPy==0.6.10
