@@ -11,7 +11,8 @@ authors = [
 ]
 readme = "README.md"
 requires-python = ">=3.12"
-license = { file = "LICENSE" }
+license = "MIT"
+license-files = { paths = ["LICENSE"] }
 dependencies = [
     "pykakasi",
     "jaconv",
@@ -28,10 +29,9 @@ dev = [
     "black"
 ]
 
-[tool.setuptools]
-package-dir = {"" = "src"}
-packages = ["romann"]
-include-package-data = true
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["romann*"]
 
 [tool.setuptools.package-data]
-romann = ["hiragana_english.json", "katakana_english.json"]
+romann = ["*.json"]
