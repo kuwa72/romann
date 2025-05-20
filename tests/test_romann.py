@@ -13,15 +13,15 @@ def test_remove_spaces_option():
     # 基本的なテスト
     assert converter.to_roman("こんにちは", remove_spaces=True) == "Konnichiha"
     assert converter.to_roman("こんにちは", remove_spaces=False) == "Konnichiha"
-    
+
     # 複数単語のテスト
     assert converter.to_roman("こんにちは 世界") == "KonnichihaSekai"  # デフォルトはTrue
     assert converter.to_roman("こんにちは 世界", remove_spaces=False) == "Konnichiha Sekai"
-    
+
     # 記号を含むテスト
     assert converter.to_roman("A・B・C") == "ABC"  # デフォルトはTrue
     assert converter.to_roman("A・B・C", remove_spaces=False) == "A B C"
-    
+
     # 英数字と日本語の混合テスト
     assert converter.to_roman("Hello 世界 123") == "HelloSekai123"  # デフォルトはTrue
     assert converter.to_roman("Hello 世界 123", remove_spaces=False) == "Hello Sekai 123"
@@ -34,7 +34,7 @@ def test_convert_kanji_to_roman():
     assert converter.to_roman("漢字") == "Kanji"
     assert converter.to_roman("日本語") == "Nihongo"
     assert converter.to_roman("こんにちは") == "Konnichiha"
-    
+
     # スペースありバージョンのテスト
     assert converter.to_roman("漢字 日本語", remove_spaces=False) == "Kanji Nihongo"
 
@@ -72,7 +72,7 @@ def test_natural_japanese_titles():
     assert converter.to_roman("追憶のマーメイド") == "TsuiokuNoMermaid"
     assert converter.to_roman("A・RA・SHI") == "ARaShi"
     assert converter.to_roman("さよならCOLOR") == "SayonaraColor"
-    
+
     # Test with remove_spaces=False
     assert converter.to_roman("薔薇の花", remove_spaces=False) == "Bara No Hana"
     assert converter.to_roman("追憶のマーメイド", remove_spaces=False) == "Tsuioku No Mermaid"
@@ -142,7 +142,7 @@ def test_mixed_japanese_english():
     assert converter.to_roman("アイ") == "I"
     assert converter.to_roman("ラブ") == "Love"
     assert converter.to_roman("ユー") == "You"
-    
+
     # Test with remove_spaces=True
     assert converter.to_roman("ハロー ワールド", remove_spaces=True) == "HelloWorld"
     assert converter.to_roman("アイ ラブ ユー", remove_spaces=True) == "ILoveYou"

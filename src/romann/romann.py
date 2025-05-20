@@ -34,6 +34,34 @@ class RomanConverter:
         """
         return self.HIRAGANA_ENGLISH.get(word.lower(), word).capitalize()
 
+    def _process_token(self, token) -> str:
+        """Process a single token from SudachiPy."""
+        surface = token.surface()
+
+        # Handle alphanumeric tokens
+        if re.match(r'^[a-zA-Z0-9]+$', surface):
+            return surface
+
+        # Get reading and convert to hiragana
+        reading = token.reading_form()
+        hiragana = jaconv.kata2hira(reading)
+
+        # Check if in dictionary
+        if hiragana in self.HIRAGANA_ENGLISH:
+            return self.HIRAGANA_ENGLISH[hiragana]
+
+        # Special case for particle "no"
+        if surface == "の" or hiragana == "の":
+            return "no"
+
+        # Skip empty tokens
+        if not surface.strip():
+            return ""
+
+        # Convert to romaji using kakasi
+        romaji = self.converter.convert(surface)
+        return ''.join(item['hepburn'] for item in romaji)
+
     def to_roman(self, text: str, remove_spaces: bool = True) -> str:
         """
         Convert Japanese text (kanji, hiragana, katakana) to romaji.
@@ -42,7 +70,9 @@ class RomanConverter:
 
         Args:
             text (str): Input text containing Japanese characters
-            remove_spaces (bool, optional): Whether to remove spaces from the output. Defaults to True.
+            remove_spaces (bool, optional): Whether to remove spaces from the output.
+                Defaults to True.
+
 
         Returns:
             str: Romanized text with natural capitalization and formatting
@@ -50,63 +80,19 @@ class RomanConverter:
         if not text:
             return ""
 
-        # 中点（・）を空白に置換して処理
-        text_processed = text.replace("・", " ")
+        # Process tokens
+        tokens = self.tokenizer_obj.tokenize(text.replace("・", " "), self.mode)
+        processed_tokens = [self._process_token(token) for token in tokens]
 
-        # 形態素解析で単語に分割
-        tokens = self.tokenizer_obj.tokenize(text_processed, self.mode)
+        # Filter out empty tokens and join with spaces
+        result_text = ' '.join(filter(None, processed_tokens))
 
-        result = []
-        for token in tokens:
-            # 表層形を取得
-            surface = token.surface()
+        # Capitalize words and clean up spaces
+        result_text = ' '.join(word.capitalize() for word in result_text.split())
+        result_text = re.sub(r'\s+', ' ', result_text).strip()
 
-            # 英数字のみの場合はそのまま追加
-            if re.match(r'^[a-zA-Z0-9]+$', surface):
-                result.append(surface)
-                continue
-
-            # 読みを取得
-            reading = token.reading_form()
-            # 読みをひらがなに変換
-            hiragana = jaconv.kata2hira(reading)
-
-            # 外来語辞書に存在するか確認
-            if hiragana in self.HIRAGANA_ENGLISH:
-                # 辞書に存在する場合は英語表記を使用
-                result.append(self.HIRAGANA_ENGLISH[hiragana])
-            else:
-                # 助詞「の」の特別処理
-                if surface == "の" or hiragana == "の":
-                    result.append("no")
-                # 空白の場合はスキップ
-                elif surface.strip() == "":
-                    continue
-                # 辞書に存在しない場合はkakasiでローマ字化
-                else:
-                    romaji = self.converter.convert(surface)
-                    # collect hepburn
-                    romaji_parts = [item['hepburn'] for item in romaji]
-                    # Join without spaces for single token
-                    romaji_text = ''.join(romaji_parts)
-                    result.append(romaji_text)
-
-        # 結果を結合して整形
-        result_text = ' '.join(result)
-
-        # 単語の先頭を大文字に
-        words = result_text.split()
-        capitalized_words = [word.capitalize() for word in words]
-        result_text = ' '.join(capitalized_words)
-
-        # 連続する空白を削除
-        result_text = re.sub(r'\s+', ' ', result_text)
-        
-        # スペースを削除するオプションが有効な場合
-        if remove_spaces:
-            result_text = result_text.replace(' ', '')
-
-        return result_text.strip()
+        # Remove spaces if requested
+        return result_text.replace(' ', '') if remove_spaces else result_text
 
     def _kata_to_hira(self, text: str) -> str:
         """
