@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.3] - 2025-05-21
+### Fixed
+- Fixed pylint issues (trailing whitespace, too many local variables)
+- Improved code organization and maintainability
+
 ## [0.1.2] - 2025-05-21
 ### Changed
 - Changed default behavior to remove spaces between words for better compatibility with display constraints

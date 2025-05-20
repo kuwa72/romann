@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "romann"
-version = "0.1.2"
+version = "0.1.3"
 description = "日本語→自然なローマ字・英語変換ライブラリ（kakasi/SudachiPyベース＋外来語辞書対応）"
 authors = [
     { name = "ykuwa" }
