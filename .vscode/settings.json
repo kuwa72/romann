@@ -1,0 +1,4 @@
+{
+    "python.languageServer": "None",
+    "deno.enable": true
+}

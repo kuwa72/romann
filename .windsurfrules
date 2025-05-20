@@ -1,0 +1,57 @@
+# main rules
+- develop with python(3.12.x)
+- execute command with venv.
+    - .venv is root of venv
+- install library if needed
+- freeze library with pip freeze > requirements.txt
+- should be TDD
+- case of using library, should check document if dont know. use perplexity.
+- should check requirements.txt before install library
+- should check README.md before start
+- shoud use latest version library, check latest by perplexity
+
+# project details
+- これは日本語→ローマ字変換用のライブラリ
+- 基本はkakasiの機能をそのまま使う
+    - 形態素解析後に処理するかもしれず、MeCabかSudashiPyを使うかもしれない
+- 追加で以下の変換を追加する
+    - 自然なローマ字
+        - 日本語非対応の液晶モノクロディスプレイに表示される4x8ドット文字でも見やすいように
+            - 1文字目は大文字
+            - 単語は区切り文字で区切る
+        - 英単語（場合によっては仏・露・独・ギリシャ語）は可能な限り英語綴りに変換する。
+            - 例：
+                - `釈迦・イン・ザ・ハウス` -> `Shaka In The House`
+                - `アース・ウィンド＆ファイアー` -> `Earth Wind & Fire`
+                - `いけないボーダーライン` -> `Ikenai Border Line`
+                - `らいおんハート` -> `Lion Heart`
+            - kanakana_english.jsonに外来語→外来語の英語表記（ASCIIコード内に納める）の単語辞書を用意して変換する。
+                - ファイル説明は後述
+
+# katakana_english.json details
+- これは日本語→英語変換用の辞書
+- 単語（基本ひらがな）をキー、英語表記（全て小文字）を値とする
+- 曲のタイトルになりそうなものをがんばって集める
+- 以下のルールに基づいて収録する
+    - 和語は登録しない
+    - valueはkeyの外来語を基本英語綴りに直裁に変換する
+      - ごむ→gum
+      - いぶ→eve
+    - 日本語圏であまりに馴染みがない語は収録しない
+    - 同じキーで複数の値の候補があるとき(lowとrawとか)は、音楽のタイトルになりそうなものを選択する（主観でよい）
+    - 複数形など同じ単語に対して複数のバリエーションがあるときは必要があれば地道に収録する
+        - ただし日本語では単数・複数をあまり意識しないのでそこまで多くないはず
+        - 長音だけ違うのとかめちゃめちゃ多いが仕方がないので愚直に柊力する
+        - キャノンとキヤノンとか、ゼネラルとジェネラルとかは、どちらもありえるので両方収録する
+    - 固有名詞は正式な表記を使用
+        ｰ ソニーはローマ字だとsoniだがsonyのほうが嬉しい
+        - 他にはカルピス→karupisu→calpisなど
+    - 略語は略語のまま保持
+        - 特にmrとかmrsとかは短い方が視認性がよいので積極的に短くする
+    - 複合語は正しい英語表記を使用
+    - ハイフンは使わない(semi-とかpre-とかはsemi,preでよい
+    - キーは積極的に重複してよい
+        - プログラマとプログラマーは両方収録する
+        - アルミとアルミニウムは両方収録する
+        - キャノンとキヤノンは両方収録する
+        - ゼネラルとジェネラルは両方収録する
