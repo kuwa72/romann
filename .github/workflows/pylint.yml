@@ -11,6 +11,11 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: "3.12"
+    - name: Clean existing installation directory
+      run: |
+        if [ -d "./src/romann" ]; then
+          rm -rf ./src/romann
+        fi
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
