@@ -96,17 +96,17 @@ def test_particle_no():
     Test special handling for particle 'の'.
     """
     converter = RomanConverter()
-    assert converter.to_roman("春の海") == "Haru No Umi"
-    assert converter.to_roman("僕の名前") == "Boku No Namae"
+    assert converter.to_roman("春の海") == "HaruNoUmi"
+    assert converter.to_roman("僕の名前") == "BokuNoNamae"
 
 def test_separator_conversion():
     """
     Test conversion of separators.
     """
     converter = RomanConverter()
-    assert converter.to_roman("A・B・C") == "A B C"
+    assert converter.to_roman("A・B・C") == "ABC"
     # ドット・パンクのSudachiPyによる分割結果に合わせる
-    assert converter.to_roman("ドット・パンク") == "Dotto Panku"
+    assert converter.to_roman("ドット・パンク") == "DottoPanku"
 
 def test_morphological_analysis():
     """
@@ -118,8 +118,8 @@ def test_morphological_analysis():
     assert converter.to_roman("ウィンド") == "Wind"
     assert converter.to_roman("アンド") == "And"
     assert converter.to_roman("ファイアー") == "Fire"
-    assert converter.to_roman("いけない") == "Ike Nai"
-    assert converter.to_roman("ボーダーライン") == "Border Line"
+    assert converter.to_roman("いけない") == "IkeNai"
+    assert converter.to_roman("ボーダーライン") == "BorderLine"
 
 def test_compound_words():
     """
@@ -153,7 +153,7 @@ def test_readme_examples():
     """
     converter = RomanConverter()
     # READMEの変換例をそのまま検証
-    assert converter.to_roman("アース・ウィンド＆ファイアー") == "Earth Wind And Fire"
-    assert converter.to_roman("いけないボーダーライン") == "Ike Nai Border Line"
-    assert converter.to_roman("さよならCOLOR") == "Sayonara Color"
-    assert converter.to_roman("釈迦・イン・ザ・ハウス") == "Shaka In The House"
+    assert converter.to_roman("アース・ウィンド＆ファイアー") == "EarthWindAndFire"
+    assert converter.to_roman("いけないボーダーライン") == "IkeNaiBorderLine"
+    assert converter.to_roman("さよならCOLOR") == "SayonaraColor"
+    assert converter.to_roman("釈迦・イン・ザ・ハウス") == "ShakaInTheHouse"

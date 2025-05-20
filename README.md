@@ -39,7 +39,7 @@ converter = RomanConverter()
 print(converter.to_roman("薔薇の花"))  # BaraNoHana
 print(converter.to_roman("アース・ウィンド＆ファイアー"))  # EarthWindAndFire
 
-# スペースありの変換
+# スペースありの変換（オプション）
 print(converter.to_roman("薔薇の花", remove_spaces=False))  # Bara No Hana
 print(converter.to_roman("アース・ウィンド＆ファイアー", remove_spaces=False))  # Earth Wind & Fire
 ```
