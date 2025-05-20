@@ -23,7 +23,7 @@ jobs:
           pip install build twine pytest
       - name: Run tests
         run: |
-          python -m pytest
+          PYTHONPATH=${{ github.workspace }}/src pytest tests/
       - name: Build package
         run: |
           python -m build
