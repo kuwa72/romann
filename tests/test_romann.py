@@ -106,7 +106,7 @@ def test_separator_conversion():
     converter = RomanConverter()
     assert converter.to_roman("A・B・C") == "ABC"
     # ドット・パンクのSudachiPyによる分割結果に合わせる
-    assert converter.to_roman("ドット・パンク") == "DottoPanku"
+    assert converter.to_roman("ドット・パンク") == "DottoPunk"
 
 def test_morphological_analysis():
     """
@@ -146,6 +146,62 @@ def test_mixed_japanese_english():
     # Test with remove_spaces=True
     assert converter.to_roman("ハロー ワールド", remove_spaces=True) == "HelloWorld"
     assert converter.to_roman("アイ ラブ ユー", remove_spaces=True) == "ILoveYou"
+
+def test_kanji_is_not_looked_up_as_loanword():
+    """
+    漢字の語は読みが外来語辞書と衝突しても引かない。
+    「愛」の読み「あい」が辞書の "i" に化けるのを防ぐ。
+    """
+    converter = RomanConverter()
+    assert converter.to_roman("愛") == "Ai"
+    assert converter.to_roman("愛を叫べ", remove_spaces=False) == "Ai Wo Sakebe"
+    assert converter.to_roman("家") == "Ie"          # 値が空で語ごと消えていた
+    assert converter.to_roman("水の中のナイフ", remove_spaces=False) == "Mizu No Naka No Knife"
+
+
+def test_kanji_english_dictionary():
+    """
+    漢字語は表記そのものをキーにした辞書で英語にする。
+    """
+    converter = RomanConverter()
+    assert converter.to_roman("東京") == "Tokyo"
+    assert converter.to_roman("東京の空の下", remove_spaces=False) == "Tokyo No Sora No Shita"
+    # 読みが「いず」でも「伊豆」は Is にならない
+    assert converter.to_roman("伊豆") == "Izu"
+
+
+def test_non_noun_is_not_looked_up_as_loanword():
+    """
+    助動詞・助詞などの機能語は外来語辞書を引かない。
+    「食べたい」の「たい」が "tie" に化けるのを防ぐ。
+    """
+    converter = RomanConverter()
+    assert converter.to_roman("そばが食べたい", remove_spaces=False) == "Soba Ga Tabe Tai"
+    # 「ね」は辞書の値が空で消えていた（"Tetene" になっていた）
+    assert converter.to_roman("てねてね") == "TeNeTeNe"
+
+
+def test_katakana_loanwords():
+    """
+    カタカナ外来語が本来のつづりになる。
+    """
+    converter = RomanConverter()
+    assert converter.to_roman("キス") == "Kiss"
+    assert converter.to_roman("マジック") == "Magic"
+    assert converter.to_roman("ドロップス") == "Drops"
+    assert converter.to_roman("SAKURAドロップス") == "SakuraDrops"
+    assert converter.to_roman("クレイジー") == "Crazy"
+    assert converter.to_roman("ムーンライト") == "Moonlight"
+    assert converter.to_roman("マイケル・ジャクソン", remove_spaces=False) == "Michael Jackson"
+
+
+def test_no_empty_dictionary_values():
+    """
+    値が空の辞書エントリは語を消してしまうので許さない。
+    """
+    empty = [k for k, v in RomanConverter.HIRAGANA_ENGLISH.items() if not v.strip()]
+    assert not empty, f"空の値を持つエントリ: {empty}"
+
 
 def test_readme_examples():
     """

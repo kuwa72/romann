@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.0] - 2026-09-02
+### Changed
+- 外来語辞書を引く条件を絞った。読みが一致するだけの語を巻き込んでいたのを、
+  カタカナ表記／ひらがなの名詞・形状詞／記号に限定した
+  - 「愛」→ I、「食べたい」の「たい」→ Tie、「Vol.」→ Volume が直る
+
+### Added
+- 外来語辞書に約990語を追加（曲名・アーティスト名の実データから抽出）
+- `kanji_english.json`: 漢字語を表記そのものをキーにして引く辞書
+
+### Fixed
+- 値が空の辞書エントリが語を消していた（「テレビ」「ドーム」「ミニスカート」など15件）
+
 ## [0.1.3] - 2025-05-21
 ### Fixed
 - Fixed pylint issues (trailing whitespace, too many local variables)
