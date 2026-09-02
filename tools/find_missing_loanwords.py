@@ -36,6 +36,7 @@ def load_texts(path):
 
 
 def main():
+    """未収録のカタカナ語を頻度順に、辞書に貼れる形で標準出力に書く。"""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("library_xml", help="iTunes の ライブラリ.xml")
     parser.add_argument("-n", "--min-count", type=int, default=1,
