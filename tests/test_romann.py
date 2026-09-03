@@ -195,6 +195,62 @@ def test_katakana_loanwords():
     assert converter.to_roman("マイケル・ジャクソン", remove_spaces=False) == "Michael Jackson"
 
 
+def test_reading_comes_from_morphological_analysis():
+    """
+    漢字の読みは表記から当てずに SudachiPy の読みを使う。
+    kakasi に表記を渡すと文脈を無視して読むため。
+    """
+    converter = RomanConverter()
+    assert converter.to_roman("君") == "Kimi"                       # kakasi なら Kun
+    assert converter.to_roman("テレ東") == "Teretou"                 # kakasi なら Terehigashi
+    assert converter.to_roman("上弦の月", remove_spaces=False) == "Jougen No Tsuki"
+    assert converter.to_roman("東京23時", remove_spaces=False) == "Tokyo 23 Ji"
+    assert converter.to_roman("江ノ島") == "Enoshima"
+
+
+def test_reading_is_not_used_for_symbols_and_latin():
+    """
+    記号やラテン文字にも読みは振られるが表記とは別物なので使わない。
+    括弧の読み「キゴウ」が Kigou と出てしまうのを防ぐ。
+    """
+    converter = RomanConverter()
+    assert "Kigou" not in converter.to_roman("君(テスト)")
+    assert converter.to_roman("Vol. 3", remove_spaces=False) == "Vol. 3"
+
+
+def test_kanji_reading_override():
+    """
+    SudachiPy の読みが曲名向きでない語は kanji_reading.json で差し替える。
+    """
+    converter = RomanConverter()
+    assert converter.to_roman("私") == "Watashi"        # 既定はワタクシ
+    assert converter.to_roman("琥珀色", remove_spaces=False) == "Kohaku Iro"
+
+
+def test_iteration_mark():
+    """
+    踊り字「々」は kakasi が "(kurikaesi)" にしてしまうので開く。
+    ただし SudachiPy が読める語は触らない。
+    """
+    converter = RomanConverter()
+    assert converter.to_roman("時々") == "Tokidoki"
+    assert converter.to_roman("人々") == "Hitobito"
+    assert "kurikaesi" not in converter.to_roman("阿良々木")
+
+
+def test_multi_token_loanword():
+    """
+    SudachiPy が割ってしまう外来語は、連結して辞書を引く。
+    「エイリアンズ」は エイリ+アンズ に割れるため1トークンでは引けない。
+    """
+    converter = RomanConverter()
+    assert converter.to_roman("エイリアンズ") == "Aliens"
+    assert converter.to_roman("ドリームランド") == "Dreamland"
+    assert converter.to_roman("ワークアウト") == "Workout"
+    # 連結しても辞書になければ、ばらしたまま
+    assert converter.to_roman("アンズ") == "Anzu"
+
+
 def test_no_empty_dictionary_values():
     """
     値が空の辞書エントリは語を消してしまうので許さない。

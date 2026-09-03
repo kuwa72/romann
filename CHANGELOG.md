@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.0] - 2026-09-03
+### Changed
+- 漢字の読みを表記から当てるのをやめ、SudachiPy の読みを使うようにした。
+  kakasi に表記を渡すと文脈を無視して読んでしまう
+  - 「君」→ Kun が Kimi に、「テレ東」→ Terehigashi が Teretou に
+  - 「江ノ島」→ Kounoshima、「阿佐ヶ谷」→ Asaketani、「東京23時」→ 23 Toki なども直る
+  - 記号とラテン文字には読みが振られても使わない（「(」→キゴウ、「Vol.」→ボリューム）
+
+### Added
+- 複数トークンにまたがる外来語を連結して辞書を引くようにした。
+  SudachiPy が「エイリアンズ」を エイリ+アンズ に割るため1語では引けなかった
+  - エイリアンズ → Aliens、ドリームランド → Dreamland、ワークアウト → Workout
+- `kanji_reading.json`: SudachiPy の読みを語ごとに差し替える（「私」→わたし など）
+
+### Fixed
+- 踊り字「々」が "(kurikaesi)" という文字列になっていた
+
 ## [0.2.0] - 2026-09-02
 ### Changed
 - 外来語辞書を引く条件を絞った。読みが一致するだけの語を巻き込んでいたのを、
